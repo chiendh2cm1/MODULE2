@@ -18,10 +18,10 @@ public class Main {
                 do {
                     System.out.println();
                     System.out.println("\t\t\t\t\t\t\t##============================== QUẢN LÝ SẢN PHẨM ==============================##");
-                    System.out.println("\t\t\t\t\t\t\t|| 1. Hiển thị danh sách sách sản phẩm     || 5. Sắp xếp theo giá tăng dần      ||");
-                    System.out.println("\t\t\t\t\t\t\t|| 2. Thêm sản phẩm mới                    || 6. Tìm kiếm sản phẩm              ||");
-                    System.out.println("\t\t\t\t\t\t\t|| 3. Sửa đổi thông tin sản phẩm           ||                                   ||");
-                    System.out.println("\t\t\t\t\t\t\t|| 4. Xóa sản phẩm                         || 7. Quay lại                       ||");
+                    System.out.println("\t\t\t\t\t\t\t|| 1. Hiển thị danh sách sách sản phẩm   || 5. Sắp xếp theo giá tăng dần      ||");
+                    System.out.println("\t\t\t\t\t\t\t|| 2. Thêm sản phẩm mới                  || 6. Tìm kiếm sản phẩm              ||");
+                    System.out.println("\t\t\t\t\t\t\t|| 3. Sửa đổi thông tin sản phẩm         || 7. Hiển thị sản phẩm theo danh mục||                                ||");
+                    System.out.println("\t\t\t\t\t\t\t|| 4. Xóa sản phẩm                       || 8. Quay lại                       ||");
                     System.out.println("\t\t\t\t\t\t\t##====================================(^^^^)====================================##");
                     System.out.print("\t\t\t\t\t\t\tNhập vào lựa chọn của bạn: ");
                     choice = Integer.parseInt(sc.nextLine());
@@ -46,6 +46,12 @@ public class Main {
                             break;
                         case 0:
                             flag = false;
+                            break;
+                        case 7:
+                            System.out.println("Hiển thị sản phẩm theo danh mục");
+                            System.out.println("Chọn danh mục mà bạn muốn hiển thị sản phẩm:");
+                            String categoryName = sc.nextLine();
+                            productManagement.showProductByCategory(categoryName);
                             break;
                         default:
                             System.err.println("\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> Nhập trong khoảng từ 0 đến 6 <<<<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -100,6 +106,8 @@ public class Main {
         String id = sc.nextLine();
         System.out.println("Nhập tên của sản phẩm:");
         String name = sc.nextLine();
+        System.out.println("Nhập tên danh mục của sản phẩm");
+        String categoryName = sc.nextLine();
         System.out.println("Nhập đơn giá sản phẩm:");
         double unitprice = sc.nextDouble();
         System.out.println("Nhập số lượng sản phẩm:");
@@ -107,7 +115,7 @@ public class Main {
         sc.nextLine();
         System.out.println("Nhập mô tả sản phẩm:");
         String description = sc.nextLine();
-        Product product = new Product(id, name, unitprice, quantily, description);
+        Product product = new Product(id, name, categoryName, unitprice, quantily, description);
         System.out.println("Thêm sản phẩm");
         return product;
     }

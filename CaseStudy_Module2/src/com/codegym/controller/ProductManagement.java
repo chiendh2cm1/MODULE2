@@ -36,11 +36,19 @@ public class ProductManagement implements GeneralManagement<Product>, ReadFile, 
         }
     }
 
+    public void showProductByCategory(String categoryName){
+        for (Product product: products){
+            if (product.getCategoryName().equals(categoryName)){
+                System.out.println(product);
+            }
+        }
+    }
+
     @Override
     public void displayAll() {
-        System.out.printf("%-10s%-15s%-15s%-15s%-15s\n", "Mã sản phẩm", "Tên sản phẩm", "Đơn giá", "Số lượng", "Mô tả");
+        System.out.printf("%-15s%-25s%-25s%-25s%-25s%-25s\n", "Mã sản phẩm", "Tên sản phẩm", "Tên danh mục", "Đơn giá", "Số lượng", "Mô tả");
         for (Product product : products)
-            System.out.printf("%-10s%-15s%-15f%-15d%-15s\n", product.getProductId(), product.getProductName(), product.getUnitPrice(), product.getQuantily(), product.getDescription());
+            System.out.printf("%-15s%-25s%-25s%-25f%-25d%-25s\n", product.getProductId(), product.getProductName(), product.getCategoryName(), product.getUnitPrice(), product.getQuantily(), product.getDescription());
     }
 
     @Override

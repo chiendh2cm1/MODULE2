@@ -3,6 +3,7 @@ package com.codegym.model;
 public class Product {
     private String productId;
     private String productName;
+    private String categoryName;
     private double unitPrice;
     private int quantily;
     private String description;
@@ -10,9 +11,10 @@ public class Product {
     public Product() {
     }
 
-    public Product(String productId, String productName, double unitPrice, int quantily, String description) {
+    public Product(String productId, String productName, String categoryName, double unitPrice, int quantily, String description) {
         this.productId = productId;
         this.productName = productName;
+        this.categoryName = categoryName;
         this.unitPrice = unitPrice;
         this.quantily = quantily;
         this.description = description;
@@ -58,11 +60,20 @@ public class Product {
         this.description = description;
     }
 
+    public String getCategoryName() {
+        return categoryName;
+    }
+
+    public void setCategoryName(String categoryName) {
+        this.categoryName = categoryName;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "productId='" + productId + '\'' +
                 ", productName='" + productName + '\'' +
+                ", categoryName='" + categoryName + '\'' +
                 ", unitPrice=" + unitPrice +
                 ", quantily=" + quantily +
                 ", description='" + description + '\'' +
