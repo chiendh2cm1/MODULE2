@@ -2,12 +2,15 @@ package com.codegym.controller;
 
 import com.codegym.model.Product;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductManagement implements GeneralManagement<Product>, ReadFile, WriteFile {
-    List<Product> products = new ArrayList<>();
+public class ProductManagement implements GeneralManagement<Product> {
+    private static List<Product> products = new ArrayList<>();
+
+    public ProductManagement() {
+
+    }
 
     public int size() {
         return products.size();
@@ -36,9 +39,9 @@ public class ProductManagement implements GeneralManagement<Product>, ReadFile, 
         }
     }
 
-    public void showProductByCategory(String categoryName){
-        for (Product product: products){
-            if (product.getCategoryName().equals(categoryName)){
+    public void showProductByCategory(String categoryName) {
+        for (Product product : products) {
+            if (product.getCategoryName().equals(categoryName)) {
                 System.out.println(product);
             }
         }
@@ -53,7 +56,7 @@ public class ProductManagement implements GeneralManagement<Product>, ReadFile, 
 
     @Override
     public void addNew(Product product) {
-        this.products.add(product);
+        products.add(product);
     }
 
     @Override
@@ -77,19 +80,5 @@ public class ProductManagement implements GeneralManagement<Product>, ReadFile, 
     public Product getById(String id) {
         int index = findProductById(id);
         return products.get(index);
-    }
-
-    @Override
-    public void readFile(String path) throws IOException, ClassNotFoundException {
-        InputStream is = new FileInputStream(path);
-        ObjectInputStream ois = new ObjectInputStream(is);
-        this.products = (List<Product>) ois.readObject();
-    }
-
-    @Override
-    public void writeFile(String path) throws IOException {
-        OutputStream os = new FileOutputStream(path);
-        ObjectOutputStream oos = new ObjectOutputStream(os);
-        oos.writeObject(this.products);
     }
 }
