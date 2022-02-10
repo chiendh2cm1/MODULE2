@@ -72,7 +72,27 @@ public class UserManagement implements WriteFile, ReadFile {
         return  isLogin;
     }
 
+    public boolean checkOWNER(String userName, String password, String role){
+        boolean isOwnerLogin = false;
+        for (int i = 0; i < users.size(); i++) {
+            if (userName.equals(users.get(i).getUserName()) && password.equals(users.get(i).getPassword()) && role.equals("ROLE_OWNER")){
+                isOwnerLogin = true;
+                break;
+            }
+        }
+        return isOwnerLogin;
+    }
 
+    public boolean checkSTAFF(String userName, String password, String role){
+        boolean isStaffLogin = false;
+        for (int i = 0; i < users.size(); i++) {
+            if (userName.equals(users.get(i).getUserName()) && password.equals(users.get(i).getPassword()) && role.equals("ROLE_STAFF")){
+                isStaffLogin = true;
+                break;
+            }
+        }
+        return isStaffLogin;
+    }
     @Override
     public void readFile(String path) throws IOException, ClassNotFoundException {
         InputStream is = new FileInputStream(path);

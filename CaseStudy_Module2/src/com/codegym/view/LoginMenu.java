@@ -9,6 +9,7 @@ public class LoginMenu {
     public static Scanner sc = new Scanner(System.in);
     private UserManagement userManagement = new UserManagement();
     private ManagementMenu managementMenu = new ManagementMenu();
+
     public void run() {
         int choice;
         boolean flag = true;
@@ -16,10 +17,11 @@ public class LoginMenu {
             try {
                 do {
                     System.out.println();
-                    System.out.println("\t\t\t\t\t\t\t##********** ỨNG DỤNG QUẢN LÝ CỬA HÀNG BÁN HÀNG ONLINE **********##");
-                    System.out.println("\t\t\t\t\t\t\t##>>>>>>>>>>>>>>>>>>>>>>>> 1. ĐĂNG NHẬP <<<<<<<<<<<<<<<<<<<<<<<<<##");
-                    System.out.println("\t\t\t\t\t\t\t##>>>>>>>>>>>>>>>>>>>>>>>> 2. ĐĂNG KÝ <<<<<<<<<<<<<<<<<<<<<<<<<<<##");
-                    System.out.println("\t\t\t\t\t\t\t##>>>>>>>>>>>>>>>>>>>>>>>> 3. ĐĂNG XUẤT <<<<<<<<<<<<<<<<<<<<<<<<<##>");
+                    System.out.println("\t\t\t\t\t\t\t##============================== QUẢN LÝ CỬA HÀNG ==============================##");
+                    System.out.println("\t\t\t\t\t\t\t##****************** ỨNG DỤNG QUẢN LÝ CỬA HÀNG BÁN HÀNG ONLINE *****************##");
+                    System.out.println("\t\t\t\t\t\t\t##******************************** 1. ĐĂNG NHẬP ********************************##");
+                    System.out.println("\t\t\t\t\t\t\t##******************************** 2. ĐĂNG KÝ **********************************##");
+                    System.out.println("\t\t\t\t\t\t\t##******************************** 3. ĐĂNG XUẤT ********************************##");
                     System.out.print("\t\t\t\t\t\t\tNhập vào lựa chọn của bạn: ");
                     choice = Integer.parseInt(sc.nextLine());
                     switch (choice) {
@@ -47,9 +49,10 @@ public class LoginMenu {
         System.out.println("Đăng ký tài khoản mới!");
         System.out.println("Nhập keyWord được cấp: ");
         String keyWord = sc.nextLine();
-        if (keyWord.equals("chucuahang")){
+        if (keyWord.equals("chucuahang")) {
             String userName;
             String password;
+            String role;
             do {
                 System.out.println("Nhập tên tài khoản: ");
                 System.out.println("<Tài khoản phải có tối thiểu tám ký tự, ít nhất một chữ cái và một số>");
@@ -60,9 +63,15 @@ public class LoginMenu {
                 System.out.println("< Mật khẩu phải có tối thiểu tám ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường và một số>");
                 password = sc.nextLine();
             } while (!userManagement.validatePassWord(password));
-            User user = new User(userName, password);
+            do {
+                System.out.println("Tài khoản này được tạo cho: ");
+                System.out.println("<chọn ROLE_STAFF hoặc ROLE_OWNER>");
+                role = sc.nextLine();
+            } while (!role.equals("ROLE_STAFF") && !role.equals("ROLE_OWNER"));
+            System.out.println("Tạo tài khoản thành công!!!");
+            User user = new User(userName, password, role);
             userManagement.register(user);
-        }else {
+        } else {
             System.err.println("Incorrect keyword!!!!!!!");
         }
     }
@@ -72,13 +81,17 @@ public class LoginMenu {
         String username = sc.nextLine();
         System.out.println("Nhập mật khẩu: ");
         String password = sc.nextLine();
-        boolean isLogin = userManagement.checkUserLogin(username, password);
-        if (isLogin) {
-            System.out.println("\n\t\t\t\t\t\t\t************>>SUCCESSFUL LOGIN************<<\n");
+        System.out.println("ROLE_STAFF/ROLE_OWNER");
+        String role = sc.nextLine();
+        boolean isOwnerLogin = userManagement.checkOWNER(username, password, role);
+        boolean isStaffLogin = userManagement.checkSTAFF(username, password, role);
+        if (isOwnerLogin) {
+            System.out.println("\n\t\t\t\t\t\t\t******************************>>SUCCESSFUL LOGIN<<******************************\n");
             managementMenu.run();
+        } else if (isStaffLogin) {
+            System.out.println("abc");
         } else {
-            System.out.println("Tài khoản hoặc mật khẩu không đúng");
+            System.out.println("Đăng nhập không thành công!!!");
         }
-
     }
 }

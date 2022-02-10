@@ -17,10 +17,10 @@ public class ProductMenu {
                 do {
                     System.out.println();
                     System.out.println("\t\t\t\t\t\t\t##============================== QUẢN LÝ SẢN PHẨM ==============================##");
-                    System.out.println("\t\t\t\t\t\t\t|| 1. Hiển thị danh sách sách sản phẩm   || 5. Sắp xếp theo giá tăng dần      ||");
-                    System.out.println("\t\t\t\t\t\t\t|| 2. Thêm sản phẩm mới                  || 6. Tìm kiếm sản phẩm              ||");
-                    System.out.println("\t\t\t\t\t\t\t|| 3. Sửa đổi thông tin sản phẩm         || 7. Hiển thị sản phẩm theo danh mục||");
-                    System.out.println("\t\t\t\t\t\t\t|| 4. Xóa sản phẩm                       || 0. Quay lại                       ||");
+                    System.out.println("\t\t\t\t\t\t\t|| 1. Hiển thị danh sách sách sản phẩm   || 5. Sắp xếp theo giá tăng dần        ||");
+                    System.out.println("\t\t\t\t\t\t\t|| 2. Thêm sản phẩm mới                  || 6. Tìm kiếm sản phẩm                ||");
+                    System.out.println("\t\t\t\t\t\t\t|| 3. Sửa đổi thông tin sản phẩm         || 7. Hiển thị sản phẩm theo danh mục  ||");
+                    System.out.println("\t\t\t\t\t\t\t|| 4. Xóa sản phẩm                       || 0. Quay lại                         ||");
                     System.out.println("\t\t\t\t\t\t\t##====================================(^^^^)====================================##");
                     System.out.print("\t\t\t\t\t\t\tNhập vào lựa chọn của bạn: ");
                     choice = Integer.parseInt(sc.nextLine());

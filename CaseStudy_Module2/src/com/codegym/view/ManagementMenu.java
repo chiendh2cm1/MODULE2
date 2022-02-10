@@ -18,8 +18,8 @@ public class ManagementMenu {
                 do {
                     System.out.println();
                     System.out.println("\t\t\t\t\t\t\t##============================== QUẢN LÝ CỬA HÀNG ==============================##");
-                    System.out.println("\t\t\t\t\t\t\t|| 1. Quản lý danh sách sản phẩm      || 2. Quản lý danh sách đơn hàng           ||");
-                    System.out.println("\t\t\t\t\t\t\t|| 0. Thoát                           ||                                         ||");
+                    System.out.println("\t\t\t\t\t\t\t|| 1. Quản lý danh sách sản phẩm      || 2. Quản lý danh sách đơn hàng          ||");
+                    System.out.println("\t\t\t\t\t\t\t|| 0. Thoát                           ||                                        ||");
                     System.out.println("\t\t\t\t\t\t\t##====================================(^^^^)====================================##");
                     System.out.print("\t\t\t\t\t\t\tNhập vào lựa chọn của bạn: ");
                     choice = Integer.parseInt(sc.nextLine());
