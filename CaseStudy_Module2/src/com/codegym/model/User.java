@@ -5,13 +5,23 @@ import java.io.Serializable;
 public class User implements Serializable {
     private String userName;
     private String password;
+    private String role;
 
     public User() {
+        this.role = "ROLE_USER";
     }
 
     public User(String userName, String password) {
         this.userName = userName;
         this.password = password;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 
     public String getUserName() {
@@ -35,6 +45,7 @@ public class User implements Serializable {
         return "User{" +
                 "userName='" + userName + '\'' +
                 ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
                 '}';
     }
 }

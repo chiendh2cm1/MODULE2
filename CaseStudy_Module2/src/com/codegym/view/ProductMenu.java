@@ -6,11 +6,10 @@ import com.codegym.model.Product;
 import java.util.Scanner;
 
 public class ProductMenu {
-
+    private ProductManagement productManagement = new ProductManagement();
     public static Scanner sc = new Scanner(System.in);
 
     public void run() {
-        ProductManagement productManagement = new ProductManagement();
         int choice;
         boolean flag = true;
         while (flag) {
@@ -44,11 +43,11 @@ public class ProductMenu {
                         case 6:
                             showFindProduct(productManagement);
                             break;
-                        case 0:
-                            flag = false;
-                            break;
                         case 7:
                             showProductByCategory(productManagement);
+                            break;
+                        case 0:
+                            flag = false;
                             break;
                         default:
                             System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> NHẬP TRONG KHOẢNG TỪ O ĐẾN 6 <<<<<<<<<<<<<<<<<<<<<<<<<<<");
@@ -56,7 +55,7 @@ public class ProductMenu {
                     }
                 } while (choice != 0);
             } catch (Exception e) {
-                System.err.println("\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>> XIN VUI LÒNG NHẬP SỐ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>> XIN VUI LÒNG NHẬP SỐ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             }
         }
     }

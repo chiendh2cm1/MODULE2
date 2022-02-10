@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Scanner;
 
 public class OrderMenu {
+    private OrderManagement orderManagement = new OrderManagement();
     public static Scanner sc = new Scanner(System.in);
 
     public void run() {
-        OrderManagement orderManagement = new OrderManagement();
         int choice;
         boolean flag = true;
         while (flag) {

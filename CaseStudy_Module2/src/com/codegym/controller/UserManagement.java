@@ -12,14 +12,15 @@ import java.util.regex.Pattern;
 
 public class UserManagement implements WriteFile, ReadFile {
     private static List<User> users = new ArrayList<>();
+    private static final String PATH_USER = "user.txt";
     private static final String REGEX_ID = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";//Tối thiểu tám ký tự, ít nhất một chữ cái và một số
     private static final String REGEX_PASS = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d]{8,}$";//Tối thiểu tám ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường và một số
 
     public UserManagement() {
-        File file = new File("user.txt");
+        File file = new File(PATH_USER);
         if (file.exists()) {
             try {
-                readFile("user.txt");
+                readFile(PATH_USER);
             } catch (IOException | ClassNotFoundException e) {
             }
         }
@@ -33,7 +34,7 @@ public class UserManagement implements WriteFile, ReadFile {
     public void register(User user) {
         users.add(user);
         try {
-            writeFile("user.txt");
+            writeFile(PATH_USER);
         } catch (IOException e) {
             e.printStackTrace();
         }

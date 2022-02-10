@@ -1,15 +1,25 @@
 package com.codegym.controller;
 
+import com.codegym.IOFile.ReadFile;
+import com.codegym.IOFile.WriteFile;
 import com.codegym.model.Product;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ProductManagement implements GeneralManagement<Product> {
+public class ProductManagement implements GeneralManagement<Product>, WriteFile, ReadFile {
     private static List<Product> products = new ArrayList<>();
+    private static final String PATH_PRODUCT = "product.txt";
 
     public ProductManagement() {
-
+        File file = new File(PATH_PRODUCT);
+        if (file.exists()) {
+            try {
+                readFile(PATH_PRODUCT);
+            } catch (IOException | ClassNotFoundException e) {
+            }
+        }
     }
 
     public int size() {
@@ -57,6 +67,11 @@ public class ProductManagement implements GeneralManagement<Product> {
     @Override
     public void addNew(Product product) {
         products.add(product);
+        try {
+            writeFile(PATH_PRODUCT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -80,5 +95,19 @@ public class ProductManagement implements GeneralManagement<Product> {
     public Product getById(String id) {
         int index = findProductById(id);
         return products.get(index);
+    }
+
+    @Override
+    public void readFile(String path) throws IOException, ClassNotFoundException {
+        InputStream is = new FileInputStream(path);
+        ObjectInputStream ois = new ObjectInputStream(is);
+        products = (List<Product>) ois.readObject();
+    }
+
+    @Override
+    public void writeFile(String path) throws IOException {
+        OutputStream os = new FileOutputStream(path);
+        ObjectOutputStream oos = new ObjectOutputStream(os);
+        oos.writeObject(products);
     }
 }

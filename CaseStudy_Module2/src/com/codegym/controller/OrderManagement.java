@@ -1,14 +1,29 @@
 package com.codegym.controller;
 
+import com.codegym.IOFile.ReadFile;
+import com.codegym.IOFile.WriteFile;
 import com.codegym.model.Order;
 import com.codegym.model.OrderDetail;
+import com.codegym.model.User;
 
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class OrderManagement implements GeneralManagement<Order> {
+public class OrderManagement implements GeneralManagement<Order>, ReadFile, WriteFile {
     private static List<Order> orders = new ArrayList<>();
+    private static final String PATH_ORDER = "oder.txt";
+
+    public OrderManagement() {
+        File file = new File(PATH_ORDER);
+        if (file.exists()) {
+            try {
+                readFile(PATH_ORDER);
+            } catch (IOException | ClassNotFoundException e) {
+            }
+        }
+    }
 
     public int size() {
         return orders.size();
@@ -62,6 +77,11 @@ public class OrderManagement implements GeneralManagement<Order> {
     @Override
     public void addNew(Order order) {
         orders.add(order);
+        try {
+            writeFile(PATH_ORDER);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -84,5 +104,19 @@ public class OrderManagement implements GeneralManagement<Order> {
     public Order getById(String id) {
         int index = findOrderById(id);
         return orders.get(index);
+    }
+
+    @Override
+    public void readFile(String path) throws IOException, ClassNotFoundException {
+        InputStream is = new FileInputStream(path);
+        ObjectInputStream ois = new ObjectInputStream(is);
+        orders = (List<Order>) ois.readObject();
+    }
+
+    @Override
+    public void writeFile(String path) throws IOException {
+        OutputStream os = new FileOutputStream(path);
+        ObjectOutputStream oos = new ObjectOutputStream(os);
+        oos.writeObject(orders);
     }
 }

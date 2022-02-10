@@ -33,43 +33,48 @@ public class LoginMenu {
                             flag = false;
                             break;
                         default:
-                            System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> NHẬP TRONG KHOẢNG TỪ 0 ĐẾN 6 <<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                            System.err.println("\n\t\t\t\t\t\t\t---------------------> NHẬP TRONG KHOẢNG TỪ 0 ĐẾN 6 <----------------------");
                             break;
                     }
                 } while (choice != 0);
             } catch (Exception e) {
-                System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>> XIN VUI LÒNG NHẬP SỐ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                System.err.println("\n\t\t\t\t\t\t\t---------------------> XIN VUI LÒNG NHẬP SỐ <----------------------");
             }
         }
     }
 
     private void doRegister() {
         System.out.println("Đăng ký tài khoản mới!");
-        String userName;
-        String password;
-        do {
-            System.out.println("Nhập tên tài khoản: ");
-            System.out.println("<Tài khoản phải có tối thiểu tám ký tự, ít nhất một chữ cái và một số>");
-            userName = sc.nextLine();
-        } while (!userManagement.validateUserName(userName) || userManagement.checkExistId(userName) || userName.equals("0"));
-        do {
-            System.out.print("Nhập nhập khẩu: ");
-            System.out.println("< Tài khoản phải có tối thiểu tám ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường và một số>");
-            password = sc.nextLine();
-        } while (!userManagement.validatePassWord(password));
-        User user = new User(userName, password);
-        userManagement.register(user);
+        System.out.println("Nhập keyWord được cấp: ");
+        String keyWord = sc.nextLine();
+        if (keyWord.equals("chucuahang")){
+            String userName;
+            String password;
+            do {
+                System.out.println("Nhập tên tài khoản: ");
+                System.out.println("<Tài khoản phải có tối thiểu tám ký tự, ít nhất một chữ cái và một số>");
+                userName = sc.nextLine();
+            } while (!userManagement.validateUserName(userName) || userManagement.checkExistId(userName) || userName.equals("0"));
+            do {
+                System.out.print("Nhập nhập khẩu: ");
+                System.out.println("< Mật khẩu phải có tối thiểu tám ký tự, ít nhất một chữ cái viết hoa, một chữ cái viết thường và một số>");
+                password = sc.nextLine();
+            } while (!userManagement.validatePassWord(password));
+            User user = new User(userName, password);
+            userManagement.register(user);
+        }else {
+            System.err.println("Incorrect keyword!!!!!!!");
+        }
     }
 
     private void doLogin() {
-        System.out.println("Nhập tên người dùng: ");
+        System.out.println("Nhập tên tài khoản: ");
         String username = sc.nextLine();
         System.out.println("Nhập mật khẩu: ");
         String password = sc.nextLine();
-        User user = new User();
         boolean isLogin = userManagement.checkUserLogin(username, password);
         if (isLogin) {
-            System.out.println("Đăng nhập thành công");
+            System.out.println("\n\t\t\t\t\t\t\t************>>SUCCESSFUL LOGIN************<<\n");
             managementMenu.run();
         } else {
             System.out.println("Tài khoản hoặc mật khẩu không đúng");

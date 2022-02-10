@@ -1,9 +1,10 @@
 package com.codegym.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Order {
+public class Order implements Serializable {
     private String OrderId;
     private String customerName;
     private String customerPhone;
