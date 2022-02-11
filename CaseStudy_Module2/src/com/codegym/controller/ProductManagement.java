@@ -78,6 +78,11 @@ public class ProductManagement implements GeneralManagement<Product>, WriteFile,
     public void updateById(String id, Product product) {
         int index = findProductById(id);
         products.set(index, product);
+        try {
+            writeFile(PATH_PRODUCT);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -86,6 +91,11 @@ public class ProductManagement implements GeneralManagement<Product>, WriteFile,
         int index = findProductById(id);
         if (index != -1) {
             products.remove(index);
+            try {
+                writeFile(PATH_PRODUCT);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return true;
         }
         return false;

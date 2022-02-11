@@ -6,7 +6,7 @@ import com.codegym.model.Product;
 import java.util.Scanner;
 
 public class ProductMenu {
-    private ProductManagement productManagement = new ProductManagement();
+    private final ProductManagement productManagement = new ProductManagement();
     public static Scanner sc = new Scanner(System.in);
 
     public void run() {
@@ -15,14 +15,7 @@ public class ProductMenu {
         while (flag) {
             try {
                 do {
-                    System.out.println();
-                    System.out.println("\t\t\t\t\t\t\t##============================== QUẢN LÝ SẢN PHẨM ==============================##");
-                    System.out.println("\t\t\t\t\t\t\t|| 1. Hiển thị danh sách sách sản phẩm   || 5. Sắp xếp theo giá tăng dần        ||");
-                    System.out.println("\t\t\t\t\t\t\t|| 2. Thêm sản phẩm mới                  || 6. Tìm kiếm sản phẩm                ||");
-                    System.out.println("\t\t\t\t\t\t\t|| 3. Sửa đổi thông tin sản phẩm         || 7. Hiển thị sản phẩm theo danh mục  ||");
-                    System.out.println("\t\t\t\t\t\t\t|| 4. Xóa sản phẩm                       || 0. Quay lại                         ||");
-                    System.out.println("\t\t\t\t\t\t\t##====================================(^^^^)====================================##");
-                    System.out.print("\t\t\t\t\t\t\tNhập vào lựa chọn của bạn: ");
+                    productMenu();
                     choice = Integer.parseInt(sc.nextLine());
                     switch (choice) {
                         case 1:
@@ -50,14 +43,25 @@ public class ProductMenu {
                             flag = false;
                             break;
                         default:
-                            System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> NHẬP TRONG KHOẢNG TỪ O ĐẾN 6 <<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                            System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> NHẬP TRONG KHOẢNG TỪ O ĐẾN 7 <<<<<<<<<<<<<<<<<<<<<<<<<<");
                             break;
                     }
                 } while (choice != 0);
             } catch (Exception e) {
-                System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>> XIN VUI LÒNG NHẬP SỐ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> XIN VUI LÒNG NHẬP SỐ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
             }
         }
+    }
+
+    private void productMenu() {
+        System.out.println();
+        System.out.println("\t\t\t\t\t\t\t##============================== QUẢN LÝ SẢN PHẨM ==============================##");
+        System.out.println("\t\t\t\t\t\t\t|| 1. Hiển thị danh sách sách sản phẩm   || 5. Sắp xếp theo giá tăng dần        ||");
+        System.out.println("\t\t\t\t\t\t\t|| 2. Thêm sản phẩm mới                  || 6. Tìm kiếm sản phẩm                ||");
+        System.out.println("\t\t\t\t\t\t\t|| 3. Sửa đổi thông tin sản phẩm         || 7. Hiển thị sản phẩm theo danh mục  ||");
+        System.out.println("\t\t\t\t\t\t\t|| 4. Xóa sản phẩm                       || 0. Quay lại                         ||");
+        System.out.println("\t\t\t\t\t\t\t##====================================(^^^^)====================================##");
+        System.out.print("\t\t\t\t\t\t\tNhập vào lựa chọn của bạn: ");
     }
 
     private static void showProductByCategory(ProductManagement productManagement) {
@@ -76,7 +80,7 @@ public class ProductMenu {
             System.out.println(" Thông tin sản phẩm cần tìm là:");
             System.out.println(productManagement.getById(id));
         } else {
-            System.out.println("Không tìm thấy sản phẩm");
+            System.err.println("Không tìm thấy sản phẩm");
         }
     }
 
@@ -94,7 +98,7 @@ public class ProductMenu {
             Product product = inputProductInfo();
             productManagement.updateById(updateId, product);
         } else {
-            System.out.println("Cập nhập bị lỗi do không tìm thấy sản phẩm");
+            System.err.println("Cập nhập bị lỗi do không tìm thấy sản phẩm");
         }
     }
 
@@ -125,7 +129,7 @@ public class ProductMenu {
         System.out.println("*****Hiển thị danh sách sản phẩm*****");
         int size = productManagement.size();
         if (size == 0) {
-            System.out.println("Danh sách rỗng");
+            System.err.println("Danh sách rỗng");
         } else {
             productManagement.displayAll();
         }
@@ -146,7 +150,7 @@ public class ProductMenu {
             if (isDeleted) {
                 System.out.println("Xóa thành công");
             } else {
-                System.out.println("Lỗi do mã sản phẩm không tồn tại");
+                System.err.println("Lỗi do mã sản phẩm không tồn tại");
             }
         }
     }

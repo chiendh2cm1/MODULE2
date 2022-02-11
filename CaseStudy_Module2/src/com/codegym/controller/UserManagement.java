@@ -11,6 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserManagement implements WriteFile, ReadFile {
+//    public static final String ROLE_OWNER = "ROLE_OWNER";
+//    public static final String ROLE_STAFF = "ROLE_STAFF";
     private static List<User> users = new ArrayList<>();
     private static final String PATH_USER = "user.txt";
     private static final String REGEX_ID = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";//Tối thiểu tám ký tự, ít nhất một chữ cái và một số
@@ -55,16 +57,17 @@ public class UserManagement implements WriteFile, ReadFile {
    public boolean checkExistId(String string) {
         for (User user : users) {
             if (user.getUserName().equals(string)) {
+                System.err.println("Tài khoản đã tồn tại!!!");
                 return true;
             }
         }
         return false;
     }
 
-    public boolean checkUserLogin(String userName, String password){
+    public boolean checkLogin(String userName, String password, String role){
         boolean isLogin = false;
         for (int i = 0; i < users.size(); i++) {
-            if (userName.equals(users.get(i).getUserName()) && password.equals(users.get(i).getPassword())){
+            if (userName.equals(users.get(i).getUserName()) && password.equals(users.get(i).getPassword()) && role.equals(users.get(i).getRole()) ){
                 isLogin = true;
                 break;
             }
@@ -72,10 +75,10 @@ public class UserManagement implements WriteFile, ReadFile {
         return  isLogin;
     }
 
-    public boolean checkOWNER(String userName, String password, String role){
+    public boolean checkOWNER( String userName, String password, String role){
         boolean isOwnerLogin = false;
         for (int i = 0; i < users.size(); i++) {
-            if (userName.equals(users.get(i).getUserName()) && password.equals(users.get(i).getPassword()) && role.equals("ROLE_OWNER")){
+            if (userName.equals(users.get(i).getUserName()) && password.equals(users.get(i).getPassword()) &&  role.equals(users.get(i).getRole())){
                 isOwnerLogin = true;
                 break;
             }
@@ -83,10 +86,10 @@ public class UserManagement implements WriteFile, ReadFile {
         return isOwnerLogin;
     }
 
-    public boolean checkSTAFF(String userName, String password, String role){
+    public boolean checkSTAFF(String userName, String password,String ROLE_STAFF){
         boolean isStaffLogin = false;
         for (int i = 0; i < users.size(); i++) {
-            if (userName.equals(users.get(i).getUserName()) && password.equals(users.get(i).getPassword()) && role.equals("ROLE_STAFF")){
+            if (userName.equals(users.get(i).getUserName()) && password.equals(users.get(i).getPassword()) && ROLE_STAFF.equals(users.get(i).getRole())){
                 isStaffLogin = true;
                 break;
             }

@@ -4,7 +4,7 @@ import com.codegym.IOFile.ReadFile;
 import com.codegym.IOFile.WriteFile;
 import com.codegym.model.Order;
 import com.codegym.model.OrderDetail;
-import com.codegym.model.User;
+
 
 import java.io.*;
 import java.util.ArrayList;
@@ -51,6 +51,14 @@ public class OrderManagement implements GeneralManagement<Order>, ReadFile, Writ
         }
     }
 
+    public double orderRevenueByOrder(Order order) {
+        double revenue = 0;
+        for (int i = 0; i < order.getOrderDetails().size(); i++) {
+            revenue += order.getOrderDetails().get(i).getQuantity() * order.getOrderDetails().get(i).getPrice();
+        }
+        return revenue;
+    }
+
     public double orderRevenue(String OrderId) {
         double revenue = 0;
         int index = findOrderById(OrderId);
@@ -88,6 +96,11 @@ public class OrderManagement implements GeneralManagement<Order>, ReadFile, Writ
     public void updateById(String id, Order order) {
         int index = findOrderById(id);
         orders.set(index, order);
+        try {
+            writeFile(PATH_ORDER);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -95,6 +108,11 @@ public class OrderManagement implements GeneralManagement<Order>, ReadFile, Writ
         int index = findOrderById(id);
         if (index != -1) {
             orders.remove(index);
+            try {
+                writeFile(PATH_ORDER);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
             return true;
         }
         return false;
@@ -118,5 +136,21 @@ public class OrderManagement implements GeneralManagement<Order>, ReadFile, Writ
         OutputStream os = new FileOutputStream(path);
         ObjectOutputStream oos = new ObjectOutputStream(os);
         oos.writeObject(orders);
+    }
+
+    public void writeFileText(Order order, String path) throws IOException {
+        FileWriter fileWriter = new FileWriter(path);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        bufferedWriter.write("\t\t\t\tSun Flower - Tiệm hoa mặt trời");
+        bufferedWriter.write("Mã đơn hàng:             " + order.getOrderId() + "\n");
+        bufferedWriter.write("Tên khách hàng:          " + order.getCustomerName() + "\n");
+        bufferedWriter.write("Số điện thoại:            " + order.getCustomerPhone() + "\n");
+        bufferedWriter.write("Danh sách mua: ( Tên sản phẩm, Số lượng, Giá )" + "\n");
+        for (OrderDetail orderDetail : order.getOrderDetails()) {
+            bufferedWriter.write(orderDetail.getOrderDetailName() + "\t\t" + orderDetail.getQuantity() + "\t\t" + orderDetail.getPrice() + "\n");
+        }
+        bufferedWriter.write("Tổng tiền hóa đơn  :" +  (int) orderRevenueByOrder(order) + "VNĐ");
+        bufferedWriter.close();
+        fileWriter.close();
     }
 }

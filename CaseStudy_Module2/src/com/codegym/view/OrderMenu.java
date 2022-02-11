@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class OrderMenu {
-    private OrderManagement orderManagement = new OrderManagement();
+    private final OrderManagement orderManagement = new OrderManagement();
     public static Scanner sc = new Scanner(System.in);
 
     public void run() {
@@ -18,14 +18,7 @@ public class OrderMenu {
         while (flag) {
             try {
                 do {
-                    System.out.println();
-                    System.out.println("\t\t\t\t\t\t\t##============================== QUẢN LÝ ĐƠN HÀNG ==============================##");
-                    System.out.println("\t\t\t\t\t\t\t|| 1. Hiển thị danh sách các đơn hàng    || 5. Tính tiền 1 đơn hàng             ||");
-                    System.out.println("\t\t\t\t\t\t\t|| 2. Thêm đơn hàng mới                  || 6. Tìm kiếm đơn hàng                ||");
-                    System.out.println("\t\t\t\t\t\t\t|| 3. Sửa đổi thông tin đơn hàng         || 7. Tính tổng tiền tất cả đơn hàng   ||");
-                    System.out.println("\t\t\t\t\t\t\t|| 4. Xóa đơn hàng                       || 0. Quay lại                         ||");
-                    System.out.println("\t\t\t\t\t\t\t##====================================(^^^^)====================================##");
-                    System.out.print("\t\t\t\t\t\t\tNhập vào lựa chọn của bạn: ");
+                    orderMenu();
                     choice = Integer.parseInt(sc.nextLine());
                     switch (choice) {
                         case 1:
@@ -49,11 +42,25 @@ public class OrderMenu {
                         case 7:
                             showTotalOrderRevenue(orderManagement);
                             break;
+                        case 8:
+                            System.out.println("Xuất hóa đơn ra file text");
+                            System.out.println("Nhập mã đơn hàng cần xuất: ");
+                            String id = sc.nextLine();
+                            int index = orderManagement.findOrderById(id);
+                            if (index !=-1){
+                                Order order;
+                                order = orderManagement.getById(id);
+                                orderManagement.writeFileText(order,"orderText.txt");
+                                System.out.println("Xuất hóa đơn thành công!!!");
+                            }else {
+                                System.err.println("Xuất hóa đơn thất bại do không tim được mã đơn hàng");
+                            }
+                            break;
                         case 0:
                             flag = false;
                             break;
                         default:
-                            System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> Nhập trong khoảng từ 0 đến 6 <<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                            System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> Nhập trong khoảng từ 0 đến 7 <<<<<<<<<<<<<<<<<<<<<<<<<<<");
                             break;
                     }
                 } while (choice != 0);
@@ -63,11 +70,23 @@ public class OrderMenu {
         }
     }
 
+    private void orderMenu() {
+        System.out.println();
+        System.out.println("\t\t\t\t\t\t\t##============================== QUẢN LÝ ĐƠN HÀNG ==============================##");
+        System.out.println("\t\t\t\t\t\t\t|| 1. Hiển thị danh sách các đơn hàng    || 6. Tìm kiếm đơn hàng                ||");
+        System.out.println("\t\t\t\t\t\t\t|| 2. Thêm đơn hàng mới                  || 7. Tính tổng tiền tất cả đơn hàng   ||");
+        System.out.println("\t\t\t\t\t\t\t|| 3. Sửa đổi thông tin đơn hàng         || 8. Xuất hóa đơn                     ||");
+        System.out.println("\t\t\t\t\t\t\t|| 4. Xóa đơn hàng                       ||                                     ||");
+        System.out.println("\t\t\t\t\t\t\t|| 5. Tính tiền 1 đơn hàng               || 0. Quay lại                         ||");
+        System.out.println("\t\t\t\t\t\t\t##====================================(^^^^)====================================##");
+        System.out.print("\t\t\t\t\t\t\tNhập vào lựa chọn của bạn: ");
+    }
+
     private static void showAllOrder(OrderManagement orderManagement) {
         System.out.println("*****Hiển thị danh sách các đơn hàng*****");
         int size = orderManagement.size();
         if (size == 0) {
-            System.out.println("Danh sách rỗng");
+            System.err.println("Danh sách rỗng");
         } else {
             orderManagement.displayAll();
         }
@@ -88,7 +107,7 @@ public class OrderMenu {
             if (isDeleted) {
                 System.out.println("Xóa thành công");
             } else {
-                System.out.println("Lỗi do mã đơn hàng không tồn tại");
+                System.err.println("Lỗi do mã đơn hàng không tồn tại");
             }
         }
     }
@@ -102,7 +121,7 @@ public class OrderMenu {
             Order order = inputOrderInfo();
             orderManagement.updateById(updateId, order);
         } else {
-            System.out.println("Cập nhập bị lỗi do không tìm thấy đơn hàng");
+            System.err.println("Cập nhập bị lỗi do không tìm thấy đơn hàng");
         }
     }
 
@@ -153,7 +172,7 @@ public class OrderMenu {
         if (index != -1) {
             revenueOrder = orderManagement.orderRevenue(orderId);
         } else {
-            System.out.println("Không tìm thấy đơn hàng");
+            System.err.println("Không tìm thấy đơn hàng");
         }
         System.out.println("Tiền của đơn hàng là: " + revenueOrder + " VNĐ");
         return;
@@ -168,7 +187,7 @@ public class OrderMenu {
             System.out.println(" Thông tin đơn hàng cần tìm là:");
             System.out.println(orderManagement.getById(orderId));
         } else {
-            System.out.println("Không tìm thấy đơn hàng");
+            System.err.println("Không tìm thấy đơn hàng");
         }
     }
 }

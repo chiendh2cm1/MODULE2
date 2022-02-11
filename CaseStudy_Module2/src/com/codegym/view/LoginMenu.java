@@ -7,8 +7,9 @@ import java.util.Scanner;
 
 public class LoginMenu {
     public static Scanner sc = new Scanner(System.in);
-    private UserManagement userManagement = new UserManagement();
-    private ManagementMenu managementMenu = new ManagementMenu();
+    private final UserManagement userManagement = new UserManagement();
+    private final ManagementStaffMenu managementStaffMenu = new ManagementStaffMenu();
+    private final ManagementOwnerMenu managementOwnerMenu = new ManagementOwnerMenu();
 
     public void run() {
         int choice;
@@ -21,7 +22,7 @@ public class LoginMenu {
                     System.out.println("\t\t\t\t\t\t\t##****************** ỨNG DỤNG QUẢN LÝ CỬA HÀNG BÁN HÀNG ONLINE *****************##");
                     System.out.println("\t\t\t\t\t\t\t##******************************** 1. ĐĂNG NHẬP ********************************##");
                     System.out.println("\t\t\t\t\t\t\t##******************************** 2. ĐĂNG KÝ **********************************##");
-                    System.out.println("\t\t\t\t\t\t\t##******************************** 3. ĐĂNG XUẤT ********************************##");
+                    System.out.println("\t\t\t\t\t\t\t##******************************** 0. ĐĂNG XUẤT ********************************##");
                     System.out.print("\t\t\t\t\t\t\tNhập vào lựa chọn của bạn: ");
                     choice = Integer.parseInt(sc.nextLine());
                     switch (choice) {
@@ -35,12 +36,12 @@ public class LoginMenu {
                             flag = false;
                             break;
                         default:
-                            System.err.println("\n\t\t\t\t\t\t\t---------------------> NHẬP TRONG KHOẢNG TỪ 0 ĐẾN 6 <----------------------");
+                            System.err.println("\n\t\t\t\t\t\t\t------------------------> NHẬP TRONG KHOẢNG TỪ 0 ĐẾN 2 <--------------------------");
                             break;
                     }
                 } while (choice != 0);
             } catch (Exception e) {
-                System.err.println("\n\t\t\t\t\t\t\t---------------------> XIN VUI LÒNG NHẬP SỐ <----------------------");
+                System.err.println("\n\t\t\t\t\t\t\t----------------------------> XIN VUI LÒNG NHẬP SỐ <------------------------------");
             }
         }
     }
@@ -83,15 +84,14 @@ public class LoginMenu {
         String password = sc.nextLine();
         System.out.println("ROLE_STAFF/ROLE_OWNER");
         String role = sc.nextLine();
-        boolean isOwnerLogin = userManagement.checkOWNER(username, password, role);
-        boolean isStaffLogin = userManagement.checkSTAFF(username, password, role);
-        if (isOwnerLogin) {
-            System.out.println("\n\t\t\t\t\t\t\t******************************>>SUCCESSFUL LOGIN<<******************************\n");
-            managementMenu.run();
-        } else if (isStaffLogin) {
-            System.out.println("abc");
+        boolean isLogin = userManagement.checkLogin(username, password, role);
+        if (isLogin && role.equals("ROLE_OWNER")) {
+            System.out.println("\n\t\t\t\t\t\t\t*******************************>>SUCCESSFUL LOGIN<<*******************************\n");
+            managementOwnerMenu.run();
+        } else if (isLogin && role.equals("ROLE_STAFF")) {
+            managementStaffMenu.run();
         } else {
-            System.out.println("Đăng nhập không thành công!!!");
+            System.err.println("Đăng nhập không thành công!!!");
         }
     }
 }

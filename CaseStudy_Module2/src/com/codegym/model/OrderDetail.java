@@ -1,6 +1,8 @@
 package com.codegym.model;
 
-public class OrderDetail {
+import java.io.Serializable;
+
+public class OrderDetail implements Serializable {
     private String orderDetailName;
     private int quantity;
     private double price;
@@ -41,10 +43,11 @@ public class OrderDetail {
 
     @Override
     public String toString() {
-        return "OrderDetail{" +
-                "orderDetailId='" + orderDetailName + '\'' +
-                ", quantity=" + quantity +
-                ", price=" + price +
-                '}';
+        return "Tên sản phẩm: " + orderDetailName +"\t\t" + "Số lượng: " + quantity + "\t\t" + "Giá: " + price+"\n";
+//        return "OrderDetail{" +
+//                "orderDetailId='" + orderDetailName + '\'' +
+//                ", quantity=" + quantity +
+//                ", price=" + price +
+//                '}';
     }
 }
