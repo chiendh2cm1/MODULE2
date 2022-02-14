@@ -28,11 +28,6 @@ public class UserManagement implements WriteFile, ReadFile {
         }
     }
 
-    public void displayAll() {
-        for (User user : users)
-            System.out.println(user);
-    }
-
     public void register(User user) {
         users.add(user);
         try {
@@ -75,32 +70,13 @@ public class UserManagement implements WriteFile, ReadFile {
         return  isLogin;
     }
 
-    public boolean checkOWNER( String userName, String password, String role){
-        boolean isOwnerLogin = false;
-        for (int i = 0; i < users.size(); i++) {
-            if (userName.equals(users.get(i).getUserName()) && password.equals(users.get(i).getPassword()) &&  role.equals(users.get(i).getRole())){
-                isOwnerLogin = true;
-                break;
-            }
-        }
-        return isOwnerLogin;
-    }
-
-    public boolean checkSTAFF(String userName, String password,String ROLE_STAFF){
-        boolean isStaffLogin = false;
-        for (int i = 0; i < users.size(); i++) {
-            if (userName.equals(users.get(i).getUserName()) && password.equals(users.get(i).getPassword()) && ROLE_STAFF.equals(users.get(i).getRole())){
-                isStaffLogin = true;
-                break;
-            }
-        }
-        return isStaffLogin;
-    }
     @Override
     public void readFile(String path) throws IOException, ClassNotFoundException {
         InputStream is = new FileInputStream(path);
         ObjectInputStream ois = new ObjectInputStream(is);
         users = (List<User>) ois.readObject();
+        is.close();
+        ois.close();
     }
 
     @Override
@@ -108,5 +84,7 @@ public class UserManagement implements WriteFile, ReadFile {
         OutputStream os = new FileOutputStream(path);
         ObjectOutputStream oos = new ObjectOutputStream(os);
         oos.writeObject(users);
+        os.close();
+        oos.close();
     }
 }

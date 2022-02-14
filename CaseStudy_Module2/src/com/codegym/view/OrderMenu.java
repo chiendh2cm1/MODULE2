@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class OrderMenu {
+    public static final String PATH_ORDER_TXT = "orderText.txt";
     private final OrderManagement orderManagement = new OrderManagement();
     public static Scanner sc = new Scanner(System.in);
 
@@ -50,7 +51,7 @@ public class OrderMenu {
                             if (index !=-1){
                                 Order order;
                                 order = orderManagement.getById(id);
-                                orderManagement.writeFileText(order,"orderText.txt");
+                                orderManagement.writeFileText(order, PATH_ORDER_TXT);
                                 System.out.println("Xuất hóa đơn thành công!!!");
                             }else {
                                 System.err.println("Xuất hóa đơn thất bại do không tim được mã đơn hàng");

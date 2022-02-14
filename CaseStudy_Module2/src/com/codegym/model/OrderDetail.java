@@ -7,9 +7,6 @@ public class OrderDetail implements Serializable {
     private int quantity;
     private double price;
 
-    public OrderDetail(){
-    }
-
     public OrderDetail(String orderDetailName, int quantity, double price) {
         this.orderDetailName = orderDetailName;
 
@@ -43,11 +40,6 @@ public class OrderDetail implements Serializable {
 
     @Override
     public String toString() {
-        return "Tên sản phẩm: " + orderDetailName +"\t\t" + "Số lượng: " + quantity + "\t\t" + "Giá: " + price+"\n";
-//        return "OrderDetail{" +
-//                "orderDetailId='" + orderDetailName + '\'' +
-//                ", quantity=" + quantity +
-//                ", price=" + price +
-//                '}';
+        return "Tên sản phẩm: " + orderDetailName + "\t\t" + "Số lượng: " + quantity + "\t\t" + "Giá: " + price + "\n";
     }
 }

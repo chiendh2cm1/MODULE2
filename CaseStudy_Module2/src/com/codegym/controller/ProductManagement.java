@@ -50,9 +50,10 @@ public class ProductManagement implements GeneralManagement<Product>, WriteFile,
     }
 
     public void showProductByCategory(String categoryName) {
+        System.out.printf("%-15s%-25s%-25s%-25s%-25s%-25s\n", "Mã sản phẩm", "Tên sản phẩm", "Tên danh mục", "Đơn giá", "Số lượng", "Mô tả");
         for (Product product : products) {
             if (product.getCategoryName().equals(categoryName)) {
-                System.out.println(product);
+                System.out.printf("%-15s%-25s%-25s%-25f%-25d%-25s\n", product.getProductId(), product.getProductName(), product.getCategoryName(), product.getUnitPrice(), product.getQuantily(), product.getDescription());
             }
         }
     }
@@ -112,6 +113,8 @@ public class ProductManagement implements GeneralManagement<Product>, WriteFile,
         InputStream is = new FileInputStream(path);
         ObjectInputStream ois = new ObjectInputStream(is);
         products = (List<Product>) ois.readObject();
+        is.close();
+        ois.close();
     }
 
     @Override
@@ -119,5 +122,7 @@ public class ProductManagement implements GeneralManagement<Product>, WriteFile,
         OutputStream os = new FileOutputStream(path);
         ObjectOutputStream oos = new ObjectOutputStream(os);
         oos.writeObject(products);
+        os.close();
+        oos.close();
     }
 }

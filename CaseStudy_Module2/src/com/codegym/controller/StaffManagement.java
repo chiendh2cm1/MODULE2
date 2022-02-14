@@ -34,7 +34,7 @@ public class StaffManagement implements WriteFile, ReadFile {
             System.out.println("Họ và tên:               " + staffs.get(i).getFullName());
             System.out.println("Tuổi:                    " + staffs.get(i).getAge());
             System.out.println("Số điện thoại:           " + staffs.get(i).getPhoneNumber());
-            System.out.println("Tiền công theo giờ:      " + staffs.get(i).getWage());
+            System.out.println("Tiền công theo giờ:      " + staffs.get(i).getWage() + " VNĐ");
             System.out.println();
         }
     }
@@ -94,6 +94,8 @@ public class StaffManagement implements WriteFile, ReadFile {
         InputStream is = new FileInputStream(path);
         ObjectInputStream ois = new ObjectInputStream(is);
         staffs = (List<Staff>) ois.readObject();
+        is.close();
+        ois.close();
     }
 
     @Override
@@ -101,5 +103,7 @@ public class StaffManagement implements WriteFile, ReadFile {
         OutputStream os = new FileOutputStream(path);
         ObjectOutputStream oos = new ObjectOutputStream(os);
         oos.writeObject(staffs);
+        os.close();
+        oos.close();
     }
 }
