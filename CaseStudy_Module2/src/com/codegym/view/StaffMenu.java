@@ -6,11 +6,11 @@ import com.codegym.model.Staff;
 import java.util.Scanner;
 
 public class StaffMenu {
-    public static Scanner sc = new Scanner(System.in);
+    public Scanner sc = new Scanner(System.in);
     private final StaffManagement staffManagement = new StaffManagement();
-
+    public static final String TEXT_RED = "\u001B[31m";
+    public static final String TEXT_RESET = "\u001B[0m";
     public void run() {
-        StaffManagement staffManagement = new StaffManagement();
         int choice;
         boolean flag = true;
         while (flag) {
@@ -21,35 +21,35 @@ public class StaffMenu {
                     choice = Integer.parseInt(sc.nextLine());
                     switch (choice) {
                         case 1:
-                            showAllStaff(staffManagement);
+                            showAllStaff();
                             break;
                         case 2:
-                            showCreatStaff(staffManagement);
+                            showCreatStaff();
                             break;
                         case 3:
-                            showUpdateStaff(staffManagement);
+                            showUpdateStaff();
                             break;
                         case 4:
-                            showFindStaffInfo(staffManagement);
+                            showFindStaffInfo();
                             break;
                         case 5:
-                            showDeleteStaff(staffManagement);
+                            showDeleteStaff();
                             break;
                         case 0:
                             flag = false;
                             break;
                         default:
-                            System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> NHẬP TRONG KHOẢNG TỪ O ĐẾN 5 <<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                            System.out.println(TEXT_RED+"\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> NHẬP TRONG KHOẢNG TỪ O ĐẾN 5 <<<<<<<<<<<<<<<<<<<<<<<<<<<"+TEXT_RESET);
                             break;
                     }
                 } while (choice != 0);
             } catch (Exception e) {
-                System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>> XIN VUI LÒNG NHẬP SỐ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                System.out.println(TEXT_RED+"\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>> XIN VUI LÒNG NHẬP SỐ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"+TEXT_RESET);
             }
         }
     }
 
-    private static void showDeleteStaff(StaffManagement staffManagement) {
+    private void showDeleteStaff() {
         System.out.println("*****Xóa nhân viên*****");
         System.out.println("Nhập tên nhân viên cần xóa: ");
         String deletename = sc.nextLine();
@@ -63,7 +63,7 @@ public class StaffMenu {
             if (isDeleted) {
                 System.out.println("Xóa thành công");
             } else {
-                System.err.println("Lỗi do tên nhân viên không tồn tại");
+                System.out.println(TEXT_RED+"Lỗi do tên nhân viên không tồn tại"+TEXT_RESET);
             }
         }
     }
@@ -71,23 +71,23 @@ public class StaffMenu {
     private static void staffMenu() {
         System.out.println();
         System.out.println("\t\t\t\t\t\t\t##============================== QUẢN LÝ NHÂN VIÊN =============================##");
-        System.out.println("\t\t\t\t\t\t\t|| 1. Hiển thị danh sách sách nhân viên   || 4. Tìm kiếm nhân viên theo tên     ||");
-        System.out.println("\t\t\t\t\t\t\t|| 2. Thêm nhân viên mới                  || 5. Xóa nhân viên                   ||");
-        System.out.println("\t\t\t\t\t\t\t|| 3. Sửa đổi thông tin nhân viên         || 0. Quay lại                        ||");
-        System.out.println("\t\t\t\t\t\t\t##====================================(^^^^)====================================##");
+        System.out.println("\t\t\t\t\t\t\t|| 1. Hiển thị danh sách sách nhân viên  || 4. Tìm kiếm nhân viên theo tên     ||");
+        System.out.println("\t\t\t\t\t\t\t|| 2. Thêm nhân viên mới                 || 5. Xóa nhân viên                   ||");
+        System.out.println("\t\t\t\t\t\t\t|| 3. Sửa đổi thông tin nhân viên        || 0. Quay lại                        ||");
+        System.out.println("\t\t\t\t\t\t\t##====================================(^^^^^^)==================================##");
     }
 
-    private static void showAllStaff(StaffManagement staffManagement) {
+    private void showAllStaff() {
         System.out.println("*****Hiển thị danh sách nhân viên*****");
         int size = staffManagement.size();
         if (size == 0) {
-            System.err.println("Danh sách rỗng");
+            System.out.println(TEXT_RED+"Danh sách nhân viên rỗng"+TEXT_RESET);
         } else {
             staffManagement.displayAll();
         }
     }
 
-    private static void showFindStaffInfo(StaffManagement staffManagement) {
+    private void showFindStaffInfo() {
         System.out.println("*****Tìm kiếm nhân viên theo tên*****");
         System.out.println("Nhập tên nhân viên cần tìm kiếm thông tin: ");
         String staffName = sc.nextLine();
@@ -96,11 +96,11 @@ public class StaffMenu {
             System.out.println(" Thông tin nhân viên cần tìm là:");
             System.out.println(staffManagement.getByName(staffName));
         } else {
-            System.err.println("Không tìm thấy sản phẩm");
+            System.out.println(TEXT_RED+"Không tìm thấy nhân viên"+TEXT_RESET);
         }
     }
 
-    private static void showUpdateStaff(StaffManagement staffManagement) {
+    private void showUpdateStaff() {
         System.out.println("*****Chỉnh sửa thông tin nhân viên*****");
         System.out.println("Nhập tên nhân viên cần chỉnh sửa");
         String updateName = sc.nextLine();
@@ -109,17 +109,17 @@ public class StaffMenu {
             Staff staff = inputStaffInfo();
             staffManagement.updateById(updateName, staff);
         } else {
-            System.err.println("Cập nhập bị lỗi do không tìm thấy mã nhân viên");
+            System.out.println(TEXT_RED+"Cập nhập bị lỗi do không tìm thấy mã nhân viên"+TEXT_RESET);
         }
     }
 
-    private static void showCreatStaff(StaffManagement staffManagement) {
+    private void showCreatStaff() {
         System.out.println("*****Thêm nhân viên*****");
         Staff staff = inputStaffInfo();
         staffManagement.addNew(staff);
     }
 
-    private static Staff inputStaffInfo() {
+    private Staff inputStaffInfo() {
         System.out.println("Nhập mã nhân viên: ");
         String staffId = sc.nextLine();
         System.out.println("Nhập tên nhân viện: ");

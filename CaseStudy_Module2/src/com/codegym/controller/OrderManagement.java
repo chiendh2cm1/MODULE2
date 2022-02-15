@@ -145,19 +145,20 @@ public class OrderManagement implements GeneralManagement<Order>, ReadFile, Writ
     public void writeFileText(Order order, String path) throws IOException {
         FileWriter fileWriter = new FileWriter(path);
         BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
-        bufferedWriter.write("\t\t\t\t\t\t   Sun Flower - Tiệm hoa mặt trời   \n");
-        bufferedWriter.write("\t\t\t\t\t\t----------------***-----------------\n");
-        bufferedWriter.write("\t\t\t\tMã đơn hàng:             " + order.getOrderId() + "\n");
-        bufferedWriter.write("\t\t\t\tTên khách hàng:          " + order.getCustomerName() + "\n");
-        bufferedWriter.write("\t\t\t\tSố điện thoại:           " + order.getCustomerPhone() + "\n");
-        bufferedWriter.write("\t\t\t\tDanh sách mua(Tên sản phẩm, Số lượng, Giá): " + "\n");
+        bufferedWriter.write("\t\t\t\t\t\t\t\t\t  Sun Flower - Tiệm hoa mặt trời   \n");
+        bufferedWriter.write("\t\t\t\t\t\t\t\t\t----------------***-----------------\n");
+        bufferedWriter.write("\t\t\t\t\t\t\tMã đơn hàng:             " + order.getOrderId() + "\n");
+        bufferedWriter.write("\t\t\t\t\t\t\tTên khách hàng:          " + order.getCustomerName() + "\n");
+        bufferedWriter.write("\t\t\t\t\t\t\tSố điện thoại:           " + order.getCustomerPhone() + "\n");
+        bufferedWriter.write("\n");
+        bufferedWriter.write("\t\t\t\t\t\t\tDanh sách mua(Tên sản phẩm, Số lượng, Giá): " + "\n");
         int i = 1;
         for (OrderDetail orderDetail : order.getOrderDetails()) {
-            bufferedWriter.write("\t\t\t\t " + i + ": " + orderDetail.getOrderDetailName() + ",       " + orderDetail.getQuantity() + ",       " + orderDetail.getPrice() + " VNĐ\n");
+            bufferedWriter.write("\t\t\t\t\t\t\t " + i + ": " + orderDetail.getOrderDetailName() + ",       " + orderDetail.getQuantity() + ",       " + orderDetail.getPrice() + " VNĐ\n");
             i++;
         }
-        bufferedWriter.write("\t\t\t\t\t\t----------------***-----------------\n");
-        bufferedWriter.write("\t\t\t\tTổng tiền hóa đơn  :" + (int) orderRevenueByOrder(order) + " VNĐ");
+        bufferedWriter.write("\t\t\t\t\t\t\t\t\t----------------***-----------------\n");
+        bufferedWriter.write("\t\t\t\t\t\t\tTổng tiền hóa đơn  :" + (int) orderRevenueByOrder(order) + " VNĐ");
         bufferedWriter.close();
         fileWriter.close();
     }

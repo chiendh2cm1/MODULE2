@@ -11,8 +11,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class UserManagement implements WriteFile, ReadFile {
-//    public static final String ROLE_OWNER = "ROLE_OWNER";
-//    public static final String ROLE_STAFF = "ROLE_STAFF";
+    public static final String TEXT_RED = "\u001B[31m";
+    public static final String TEXT_RESET = "\u001B[0m";
     private static List<User> users = new ArrayList<>();
     private static final String PATH_USER = "user.txt";
     private static final String REGEX_ID = "^(?=.*[A-Za-z])(?=.*\\d)[A-Za-z\\d]{8,}$";//Tối thiểu tám ký tự, ít nhất một chữ cái và một số
@@ -52,7 +52,7 @@ public class UserManagement implements WriteFile, ReadFile {
    public boolean checkExistId(String string) {
         for (User user : users) {
             if (user.getUserName().equals(string)) {
-                System.err.println("Tài khoản đã tồn tại!!!");
+                System.out.println(TEXT_RED+"Tài khoản đã tồn tại!!!"+TEXT_RESET);
                 return true;
             }
         }

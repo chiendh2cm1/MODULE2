@@ -4,7 +4,8 @@ import java.util.Scanner;
 
 public class ManagementStaffMenu {
     public Scanner sc = new Scanner(System.in);
-
+    public static final String TEXT_RED = "\u001B[31m";
+    public static final String TEXT_RESET = "\u001B[0m";
     public void run() {
         ProductMenu productMenu = new ProductMenu();
         OrderMenu orderMenu = new OrderMenu();
@@ -31,12 +32,12 @@ public class ManagementStaffMenu {
                             flag = false;
                             break;
                         default:
-                            System.err.println("\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> NHẬP TRONG KHOẢNG TỪ 0 ĐẾN 2 <<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                            System.out.println(TEXT_RED+"\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> NHẬP TRONG KHOẢNG TỪ 0 ĐẾN 2 <<<<<<<<<<<<<<<<<<<<<<<<<<<"+TEXT_RESET);
                             break;
                     }
                 } while (choice != 0);
             } catch (Exception e) {
-                System.err.println("\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>> XIN VUI LÒNG NHẬP SỐ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                System.out.println(TEXT_RED+"\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>> XIN VUI LÒNG NHẬP SỐ <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"+TEXT_RESET);
             }
         }
     }

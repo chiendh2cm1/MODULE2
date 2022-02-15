@@ -4,6 +4,7 @@ import com.codegym.controller.OrderManagement;
 import com.codegym.model.Order;
 import com.codegym.model.OrderDetail;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,8 +12,9 @@ import java.util.Scanner;
 public class OrderMenu {
     public static final String PATH_ORDER_TXT = "orderText.txt";
     private final OrderManagement orderManagement = new OrderManagement();
-    public static Scanner sc = new Scanner(System.in);
-
+    public Scanner sc = new Scanner(System.in);
+    public static final String TEXT_RED = "\u001B[31m";
+    public static final String TEXT_RESET = "\u001B[0m";
     public void run() {
         int choice;
         boolean flag = true;
@@ -23,67 +25,71 @@ public class OrderMenu {
                     choice = Integer.parseInt(sc.nextLine());
                     switch (choice) {
                         case 1:
-                            showAllOrder(orderManagement);
+                            showAllOrder();
                             break;
                         case 2:
-                            showCreatOrder(orderManagement);
+                            showCreatOrder();
                             break;
                         case 3:
-                            showUpdateOrder(orderManagement);
+                            showUpdateOrder();
                             break;
                         case 4:
-                            showDeleteOrder(orderManagement);
+                            showDeleteOrder();
                             break;
                         case 5:
-                            showRevenueOrder(orderManagement);
+                            showRevenueOrder();
                             break;
                         case 6:
-                            showFindOrder(orderManagement);
+                            showFindOrder();
                             break;
                         case 7:
-                            showTotalOrderRevenue(orderManagement);
+                            showTotalOrderRevenue();
                             break;
                         case 8:
-                            System.out.println("Xuất hóa đơn ra file text");
-                            System.out.println("Nhập mã đơn hàng cần xuất: ");
-                            String id = sc.nextLine();
-                            int index = orderManagement.findOrderById(id);
-                            if (index !=-1){
-                                Order order;
-                                order = orderManagement.getById(id);
-                                orderManagement.writeFileText(order, PATH_ORDER_TXT);
-                                System.out.println("Xuất hóa đơn thành công!!!");
-                            }else {
-                                System.err.println("Xuất hóa đơn thất bại do không tim được mã đơn hàng");
-                            }
+                            showInvoice();
                             break;
                         case 0:
                             flag = false;
                             break;
                         default:
-                            System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> Nhập trong khoảng từ 0 đến 7 <<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                            System.out.println(TEXT_RED+"\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>> Nhập trong khoảng từ 0 đến 7 <<<<<<<<<<<<<<<<<<<<<<<<<<<"+TEXT_RESET);
                             break;
                     }
                 } while (choice != 0);
             } catch (Exception e) {
-                System.err.println("\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Xin vui lòng nhập số <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
+                System.out.println(TEXT_RED+"\n\t\t\t\t\t\t\t>>>>>>>>>>>>>>>>>>>>>>>>>>>>> Xin vui lòng nhập số <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<"+TEXT_RESET);
             }
+        }
+    }
+
+    private void showInvoice() throws IOException {
+        System.out.println("Xuất hóa đơn ra file text");
+        System.out.println("Nhập mã đơn hàng cần xuất: ");
+        String id = sc.nextLine();
+        int index = orderManagement.findOrderById(id);
+        if (index !=-1){
+            Order order;
+            order = orderManagement.getById(id);
+            orderManagement.writeFileText(order, PATH_ORDER_TXT);
+            System.out.println("Xuất hóa đơn thành công!!!");
+        }else {
+            System.out.println(TEXT_RED+"Xuất hóa đơn thất bại do không tim được mã đơn hàng"+TEXT_RESET);
         }
     }
 
     private void orderMenu() {
         System.out.println();
         System.out.println("\t\t\t\t\t\t\t##============================== QUẢN LÝ ĐƠN HÀNG ==============================##");
-        System.out.println("\t\t\t\t\t\t\t|| 1. Hiển thị danh sách các đơn hàng    || 6. Tìm kiếm đơn hàng                ||");
-        System.out.println("\t\t\t\t\t\t\t|| 2. Thêm đơn hàng mới                  || 7. Tính tổng tiền tất cả đơn hàng   ||");
-        System.out.println("\t\t\t\t\t\t\t|| 3. Sửa đổi thông tin đơn hàng         || 8. Xuất hóa đơn                     ||");
-        System.out.println("\t\t\t\t\t\t\t|| 4. Xóa đơn hàng                       ||                                     ||");
-        System.out.println("\t\t\t\t\t\t\t|| 5. Tính tiền 1 đơn hàng               || 0. Quay lại                         ||");
+        System.out.println("\t\t\t\t\t\t\t|| 1. Hiển thị danh sách các đơn hàng   || 6. Tìm kiếm đơn hàng                ||");
+        System.out.println("\t\t\t\t\t\t\t|| 2. Thêm đơn hàng mới                 || 7. Tính tổng tiền tất cả đơn hàng   ||");
+        System.out.println("\t\t\t\t\t\t\t|| 3. Sửa đổi thông tin đơn hàng        || 8. Xuất hóa đơn                     ||");
+        System.out.println("\t\t\t\t\t\t\t|| 4. Xóa đơn hàng                      ||                                     ||");
+        System.out.println("\t\t\t\t\t\t\t|| 5. Tính tiền 1 đơn hàng              || 0. Quay lại                         ||");
         System.out.println("\t\t\t\t\t\t\t##====================================(^^^^)====================================##");
         System.out.print("\t\t\t\t\t\t\tNhập vào lựa chọn của bạn: ");
     }
 
-    private static void showAllOrder(OrderManagement orderManagement) {
+    private void showAllOrder() {
         System.out.println("*****Hiển thị danh sách các đơn hàng*****");
         int size = orderManagement.size();
         if (size == 0) {
@@ -93,7 +99,7 @@ public class OrderMenu {
         }
     }
 
-    private static void showDeleteOrder(OrderManagement orderManagement) {
+    private void showDeleteOrder() {
         System.out.println("Xóa đơn hàng theo mã");
         String deleteId;
         System.out.println("Nhập vào mã của đơn hàng cần xóa:");
@@ -108,12 +114,12 @@ public class OrderMenu {
             if (isDeleted) {
                 System.out.println("Xóa thành công");
             } else {
-                System.err.println("Lỗi do mã đơn hàng không tồn tại");
+                System.out.println(TEXT_RED+"Lỗi do mã đơn hàng không tồn tại"+TEXT_RESET);
             }
         }
     }
 
-    private static void showUpdateOrder(OrderManagement orderManagement) {
+    private void showUpdateOrder() {
         System.out.println("Chỉnh sửa thông tin đơn hàng");
         System.out.println("Nhập mã đơn hàng cần chỉnh sửa");
         String updateId = sc.nextLine();
@@ -122,17 +128,17 @@ public class OrderMenu {
             Order order = inputOrderInfo();
             orderManagement.updateById(updateId, order);
         } else {
-            System.err.println("Cập nhập bị lỗi do không tìm thấy đơn hàng");
+            System.out.println(TEXT_RED+"Cập nhập bị lỗi do không tìm thấy đơn hàng"+TEXT_RESET);
         }
     }
 
-    private static void showCreatOrder(OrderManagement orderManagement) {
+    private void showCreatOrder() {
         System.out.println("*****Thêm đơn hàng*****");
         Order order = inputOrderInfo();
         orderManagement.addNew(order);
     }
 
-    private static Order inputOrderInfo() {
+    private Order inputOrderInfo() {
         System.out.println("Mã đặt hàng: ");
         String oderId = sc.nextLine();
         System.out.println("Nhập tên khách hàng: ");
@@ -149,7 +155,7 @@ public class OrderMenu {
             String orderDetailname = sc.nextLine();
             System.out.println("Nhập số lượng: ");
             int quantity = sc.nextInt();
-            System.out.println("Nhập giá: ");
+            System.out.println("Nhập đơn giá: ");
             double price = sc.nextDouble();
             sc.nextLine();
             OrderDetail orderDetail = new OrderDetail(orderDetailname, quantity, price);
@@ -159,12 +165,12 @@ public class OrderMenu {
         return order;
     }
 
-    private static void showTotalOrderRevenue(OrderManagement orderManagement) {
+    private void showTotalOrderRevenue() {
         System.out.println("Tổng tiền tất cả đơn hàng: ");
         orderManagement.totalOrderRevenue();
     }
 
-    private static void showRevenueOrder(OrderManagement orderManagement) {
+    private void showRevenueOrder() {
         double revenueOrder = 0;
         System.out.println("Tính tiền cho 1 đơn hàng");
         System.out.println("Nhập mã đơn hàng cần tính tiền: ");
@@ -173,22 +179,27 @@ public class OrderMenu {
         if (index != -1) {
             revenueOrder = orderManagement.orderRevenue(orderId);
         } else {
-            System.err.println("Không tìm thấy đơn hàng");
+            System.out.println(TEXT_RED+"Không tìm thấy đơn hàng"+TEXT_RESET);
         }
         System.out.println("Tiền của đơn hàng là: " + revenueOrder + " VNĐ");
         return;
     }
 
-    private static void showFindOrder(OrderManagement orderManagement) {
+    private void showFindOrder() {
         System.out.println("Tìm kiếm đơn hàng theo mã đơn hàng");
         System.out.println("Nhập mã đơn hàng: ");
         String orderId = sc.nextLine();
         int index = orderManagement.findOrderById(orderId);
         if (index != -1) {
-            System.out.println(" Thông tin đơn hàng cần tìm là:");
-            System.out.println(orderManagement.getById(orderId));
+            System.out.println("Thông tin đơn hàng cần tìm là:");
+            Order order = orderManagement.getById(orderId);
+            System.out.println("Mã đơn hàng( " + order.getOrderId() + " ), " + "Tên khách hàng( " + order.getCustomerName() + " ), " + "SĐT( " + order.getCustomerPhone() + " )");
+            for (OrderDetail orderDetail : order.getOrderDetails()) {
+                System.out.printf("%-25s%-25s%-25s\n", "Tên mặt hàng", "Số lượng", "Đơn giá");
+                System.out.printf("%-25s%-25s%-25s\n", orderDetail.getOrderDetailName(), orderDetail.getQuantity(), orderDetail.getPrice());
+            }
         } else {
-            System.err.println("Không tìm thấy đơn hàng");
+            System.out.println(TEXT_RED+"Không tìm thấy đơn hàng"+TEXT_RESET);
         }
     }
 }
